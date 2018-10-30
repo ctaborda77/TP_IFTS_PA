@@ -98,6 +98,13 @@ public class datos extends javax.swing.JFrame implements ClipboardOwner{
         jLabel18 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         idM = new javax.swing.JTextField();
+        login = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        loginUser = new javax.swing.JTextField();
+        loginPasswd = new javax.swing.JTextField();
+        btnLogin = new javax.swing.JButton();
+        btnCancellLogin = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtBusqueda = new javax.swing.JTextField();
@@ -108,7 +115,7 @@ public class datos extends javax.swing.JFrame implements ClipboardOwner{
         jLabel2 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         btnModif = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
 
         copiar.setText("copiar");
         copiar.addActionListener(new java.awt.event.ActionListener() {
@@ -233,6 +240,53 @@ public class datos extends javax.swing.JFrame implements ClipboardOwner{
                 .addGap(49, 49, 49))
         );
 
+        jLabel3.setText("Usuario: ");
+
+        jLabel4.setText("Contraseña: ");
+
+        btnLogin.setText("Login");
+
+        btnCancellLogin.setText("Cancelar");
+
+        javax.swing.GroupLayout loginLayout = new javax.swing.GroupLayout(login);
+        login.setLayout(loginLayout);
+        loginLayout.setHorizontalGroup(
+            loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(loginLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(loginLayout.createSequentialGroup()
+                        .addGroup(loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel3))
+                        .addGap(18, 18, 18)
+                        .addGroup(loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(loginPasswd, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
+                            .addComponent(loginUser)))
+                    .addGroup(loginLayout.createSequentialGroup()
+                        .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnCancellLogin)))
+                .addContainerGap(21, Short.MAX_VALUE))
+        );
+        loginLayout.setVerticalGroup(
+            loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(loginLayout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addGroup(loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(loginUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24)
+                .addGroup(loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(loginPasswd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(38, 38, 38)
+                .addGroup(loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnLogin)
+                    .addComponent(btnCancellLogin))
+                .addContainerGap(29, Short.MAX_VALUE))
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Unidad de Trabajo");
         setLocation(new java.awt.Point(300, 250));
@@ -292,10 +346,10 @@ public class datos extends javax.swing.JFrame implements ClipboardOwner{
             }
         });
 
-        jButton1.setText("Eliminar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnEliminarActionPerformed(evt);
             }
         });
 
@@ -331,7 +385,7 @@ public class datos extends javax.swing.JFrame implements ClipboardOwner{
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(32, 32, 32)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(btnModif, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
@@ -353,7 +407,7 @@ public class datos extends javax.swing.JFrame implements ClipboardOwner{
                     .addComponent(jLabel1)
                     .addComponent(bustec, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(btnEliminar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnModif)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -415,7 +469,6 @@ public class datos extends javax.swing.JFrame implements ClipboardOwner{
             filaSeleccionada = table.getSelectedRow();
             bustec.setText(table.getValueAt(filaSeleccionada, 2).toString());
             clearTxtBus();
-            System.out.println(filaSeleccionada);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, "Debe seleccionar una fila...");
         }
@@ -427,14 +480,20 @@ public class datos extends javax.swing.JFrame implements ClipboardOwner{
     }//GEN-LAST:event_copiarActionPerformed
 
     private void btnModifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifActionPerformed
-        filaSeleccionada = table.getSelectedRow();
-        idM.setText(table.getValueAt(filaSeleccionada, 0).toString());
-        movilM.setText(table.getValueAt(filaSeleccionada, 1).toString());
-        telM.setText(table.getValueAt(filaSeleccionada, 2).toString());
-        unidadM.setText(table.getValueAt(filaSeleccionada, 3).toString());
-        nomM.setText(table.getValueAt(filaSeleccionada, 4).toString());
-        baseM.setText(table.getValueAt(filaSeleccionada, 5).toString());
-        this.vistaModif.setVisible(true);
+        try {
+            filaSeleccionada = table.getSelectedRow();
+            idM.setText(table.getValueAt(filaSeleccionada, 0).toString());
+            movilM.setText(table.getValueAt(filaSeleccionada, 1).toString());
+            telM.setText(table.getValueAt(filaSeleccionada, 2).toString());
+            unidadM.setText(table.getValueAt(filaSeleccionada, 3).toString());
+            nomM.setText(table.getValueAt(filaSeleccionada, 4).toString());
+            baseM.setText(table.getValueAt(filaSeleccionada, 5).toString());
+            this.vistaModif.setVisible(true);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, "Debe seleccionar una fila...");
+        }
+        
+        
         
     }//GEN-LAST:event_btnModifActionPerformed
 
@@ -466,13 +525,14 @@ public class datos extends javax.swing.JFrame implements ClipboardOwner{
             mostrar();
             
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al actualizar registro");
         }
     }//GEN-LAST:event_modifGuardarActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         Connection conec = null;
         filaSeleccionada = table.getSelectedRow();
-        idM.setText(table.getValueAt(filaSeleccionada, 0).toString());
+        
         try {
             conec = conectar();
             ps = conec.prepareStatement("DELETE FROM unidad_trabajo WHERE ID =? ");
@@ -489,8 +549,9 @@ public class datos extends javax.swing.JFrame implements ClipboardOwner{
             mostrar();
             
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, "Debe seleccionar una fila...");
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
 
     public static void main(String args[]) {
@@ -535,11 +596,13 @@ public class datos extends javax.swing.JFrame implements ClipboardOwner{
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField baseM;
+    private javax.swing.JButton btnCancellLogin;
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnModif;
     private javax.swing.JTextField bustec;
     private javax.swing.JMenuItem copiar;
     private javax.swing.JTextField idM;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
@@ -548,11 +611,16 @@ public class datos extends javax.swing.JFrame implements ClipboardOwner{
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel login;
+    private javax.swing.JTextField loginPasswd;
+    private javax.swing.JTextField loginUser;
     private javax.swing.JButton modifCancelar;
     private javax.swing.JButton modifGuardar;
     private javax.swing.JTextField movilM;
