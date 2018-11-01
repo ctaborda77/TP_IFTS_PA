@@ -1,4 +1,5 @@
 
+
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.ClipboardOwner;
@@ -11,7 +12,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.Arrays;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
@@ -23,6 +23,8 @@ public class datos extends javax.swing.JFrame implements ClipboardOwner{
     public static final String URL = "jdbc:mysql://localhost/tecnicos";
     public static final String USSERNAME = "admin";
     public static final String PASSWD = "root";
+    boolean auth = false;
+    private String usuario,password;
     
     PreparedStatement ps;
     ResultSet rs;
@@ -37,8 +39,6 @@ public class datos extends javax.swing.JFrame implements ClipboardOwner{
         return conec;
     }
     
-    
-    
     int filaSeleccionada;
     TableRowSorter trsfiltro;
   
@@ -50,8 +50,15 @@ public class datos extends javax.swing.JFrame implements ClipboardOwner{
         initComponents();
         setLocationRelativeTo(null);
         mostrar();
+        System.out.println(auth);
     }
 
+
+    public void datos(String us, String pas){
+        usuario = "Admin"; 
+        password = "admin";
+    }
+    
     private void mostrar(){
         DefaultTableModel modelo = new DefaultTableModel();
         
@@ -98,13 +105,14 @@ public class datos extends javax.swing.JFrame implements ClipboardOwner{
         jLabel18 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         idM = new javax.swing.JTextField();
-        login = new javax.swing.JPanel();
+        vistaLogin = new javax.swing.JDialog();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        loginUser = new javax.swing.JTextField();
-        loginPasswd = new javax.swing.JTextField();
+        txtUsuario = new javax.swing.JTextField();
+        txtPasswd = new javax.swing.JPasswordField();
+        jLabel5 = new javax.swing.JLabel();
         btnLogin = new javax.swing.JButton();
-        btnCancellLogin = new javax.swing.JButton();
+        btnCancelarLogin = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtBusqueda = new javax.swing.JTextField();
@@ -127,7 +135,6 @@ public class datos extends javax.swing.JFrame implements ClipboardOwner{
 
         vistaModif.setLocation(new java.awt.Point(300, 250));
         vistaModif.setMinimumSize(new java.awt.Dimension(485, 400));
-        vistaModif.setPreferredSize(new java.awt.Dimension(485, 400));
 
         jLabel13.setText("Móvil:");
 
@@ -240,51 +247,68 @@ public class datos extends javax.swing.JFrame implements ClipboardOwner{
                 .addGap(49, 49, 49))
         );
 
-        jLabel3.setText("Usuario: ");
+        vistaLogin.setLocation(new java.awt.Point(300, 250));
+        vistaLogin.setMinimumSize(new java.awt.Dimension(320, 340));
+
+        jLabel3.setText("Usuario:");
 
         jLabel4.setText("Contraseña: ");
 
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/if_Login.png"))); // NOI18N
+
         btnLogin.setText("Login");
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginActionPerformed(evt);
+            }
+        });
 
-        btnCancellLogin.setText("Cancelar");
+        btnCancelarLogin.setText("Cancelar");
 
-        javax.swing.GroupLayout loginLayout = new javax.swing.GroupLayout(login);
-        login.setLayout(loginLayout);
-        loginLayout.setHorizontalGroup(
-            loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(loginLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(loginLayout.createSequentialGroup()
-                        .addGroup(loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel3))
-                        .addGap(18, 18, 18)
-                        .addGroup(loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(loginPasswd, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
-                            .addComponent(loginUser)))
-                    .addGroup(loginLayout.createSequentialGroup()
-                        .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnCancellLogin)))
-                .addContainerGap(21, Short.MAX_VALUE))
+        javax.swing.GroupLayout vistaLoginLayout = new javax.swing.GroupLayout(vistaLogin.getContentPane());
+        vistaLogin.getContentPane().setLayout(vistaLoginLayout);
+        vistaLoginLayout.setHorizontalGroup(
+            vistaLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(vistaLoginLayout.createSequentialGroup()
+                .addGroup(vistaLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(vistaLoginLayout.createSequentialGroup()
+                        .addGap(118, 118, 118)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(vistaLoginLayout.createSequentialGroup()
+                        .addGap(43, 43, 43)
+                        .addGroup(vistaLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(vistaLoginLayout.createSequentialGroup()
+                                .addComponent(btnLogin)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnCancelarLogin))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, vistaLoginLayout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(50, 50, 50)
+                                .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, vistaLoginLayout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtPasswd)))))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
-        loginLayout.setVerticalGroup(
-            loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(loginLayout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addGroup(loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+        vistaLoginLayout.setVerticalGroup(
+            vistaLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(vistaLoginLayout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addGroup(vistaLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(loginUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24)
-                .addGroup(loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20)
+                .addGroup(vistaLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(loginPasswd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(38, 38, 38)
-                .addGroup(loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtPasswd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(vistaLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnLogin)
-                    .addComponent(btnCancellLogin))
-                .addContainerGap(29, Short.MAX_VALUE))
+                    .addComponent(btnCancelarLogin))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -488,7 +512,13 @@ public class datos extends javax.swing.JFrame implements ClipboardOwner{
             unidadM.setText(table.getValueAt(filaSeleccionada, 3).toString());
             nomM.setText(table.getValueAt(filaSeleccionada, 4).toString());
             baseM.setText(table.getValueAt(filaSeleccionada, 5).toString());
-            this.vistaModif.setVisible(true);
+            if (auth==true){
+                this.vistaModif.setVisible(true);
+            }else{
+                this.vistaLogin.setVisible(true);
+            }
+            
+            System.out.println(auth);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(rootPane, "Debe seleccionar una fila...");
         }
@@ -534,6 +564,7 @@ public class datos extends javax.swing.JFrame implements ClipboardOwner{
         filaSeleccionada = table.getSelectedRow();
         
         try {
+            
             conec = conectar();
             ps = conec.prepareStatement("DELETE FROM unidad_trabajo WHERE ID =? ");
             ps.setInt(1,Integer.parseInt(table.getValueAt(filaSeleccionada, 0).toString()));
@@ -552,6 +583,36 @@ public class datos extends javax.swing.JFrame implements ClipboardOwner{
             JOptionPane.showMessageDialog(rootPane, "Debe seleccionar una fila...");
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+    datos(usuario, password);
+    if(usuario.equals(txtUsuario.getText()) && password.equals(txtPasswd.getText())){
+         auth=true;
+         this.vistaModif.setVisible(true);
+         System.out.println(auth);
+         this.vistaLogin.setVisible(false);
+    }else if(txtUsuario.getText().equals("") && txtPasswd.getText().equals("")){
+        JOptionPane.showMessageDialog(this,"Usuario y/o Contraseña estan vacios\nIngrese los por favor.");
+        txtUsuario.setFocusable(true);
+    }else if(txtUsuario.getText().equals("")){
+        JOptionPane.showMessageDialog(this,"Usuario está vacio\nIngrese lo por favor.");
+        txtUsuario.setFocusable(true);
+    }else if(txtPasswd.getText().equals("")){
+        JOptionPane.showMessageDialog(this,"Contraseña está vacio\nIngrese lo por favor.");
+        txtPasswd.setFocusable(true);
+    }
+    else if(txtUsuario.getText().compareTo(usuario)!=0 && txtPasswd.getText().compareTo(password)!=0){
+        JOptionPane.showMessageDialog(this,"Usuario y/o Contraseña no válidos\nIngrese nuevamente.");
+         txtUsuario.setFocusable(true);
+    }
+    else if(txtUsuario.getText().compareTo(usuario)!=0){
+        JOptionPane.showMessageDialog(this,"Usuario no válido\nIngrese nuevamente.");
+        txtUsuario.setFocusable(true);
+    }else if(txtPasswd.getText().compareTo(password)!=0){
+        JOptionPane.showMessageDialog(this,"Contraseña no válida\nIngrese nuevamente.");
+        txtPasswd.setFocusable(true);
+    }
+    }//GEN-LAST:event_btnLoginActionPerformed
 
 
     public static void main(String args[]) {
@@ -596,7 +657,7 @@ public class datos extends javax.swing.JFrame implements ClipboardOwner{
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField baseM;
-    private javax.swing.JButton btnCancellLogin;
+    private javax.swing.JButton btnCancelarLogin;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnModif;
@@ -613,14 +674,12 @@ public class datos extends javax.swing.JFrame implements ClipboardOwner{
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JPanel login;
-    private javax.swing.JTextField loginPasswd;
-    private javax.swing.JTextField loginUser;
     private javax.swing.JButton modifCancelar;
     private javax.swing.JButton modifGuardar;
     private javax.swing.JTextField movilM;
@@ -629,7 +688,10 @@ public class datos extends javax.swing.JFrame implements ClipboardOwner{
     private javax.swing.JTable table;
     private javax.swing.JTextField telM;
     private javax.swing.JTextField txtBusqueda;
+    private javax.swing.JPasswordField txtPasswd;
+    private javax.swing.JTextField txtUsuario;
     private javax.swing.JTextField unidadM;
+    private javax.swing.JDialog vistaLogin;
     private javax.swing.JDialog vistaModif;
     // End of variables declaration//GEN-END:variables
 
