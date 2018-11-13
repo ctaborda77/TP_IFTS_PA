@@ -114,6 +114,20 @@ public class datos extends javax.swing.JFrame implements ClipboardOwner{
         jLabel5 = new javax.swing.JLabel();
         btn_Login = new javax.swing.JButton();
         btnCancelarLogin = new javax.swing.JButton();
+        vistaNuevo = new javax.swing.JDialog();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        movilN = new javax.swing.JTextField();
+        telN = new javax.swing.JTextField();
+        unidadN = new javax.swing.JTextField();
+        nomN = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jComboBox1 = new javax.swing.JComboBox<>();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtBusqueda = new javax.swing.JTextField();
@@ -210,14 +224,14 @@ public class datos extends javax.swing.JFrame implements ClipboardOwner{
                                     .addGroup(vistaModifLayout.createSequentialGroup()
                                         .addComponent(idM, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(0, 0, Short.MAX_VALUE)))))))
-                .addContainerGap(63, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         vistaModifLayout.setVerticalGroup(
             vistaModifLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(vistaModifLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel18)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(vistaModifLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(idM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -318,6 +332,90 @@ public class datos extends javax.swing.JFrame implements ClipboardOwner{
                     .addComponent(btn_Login)
                     .addComponent(btnCancelarLogin))
                 .addContainerGap(35, Short.MAX_VALUE))
+        );
+
+        vistaNuevo.setPreferredSize(new java.awt.Dimension(434, 365));
+
+        jLabel8.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel8.setText("Ingreso de Nuevo Registro");
+
+        jLabel9.setText("Móvil:");
+
+        jLabel10.setText("Teléfono:");
+
+        jLabel11.setText("Unidad Operativa:");
+
+        jLabel12.setText("Nombre y Apellido:");
+
+        jLabel19.setText("Base Administrativa:");
+
+        jButton1.setText("Registrar");
+
+        jButton2.setText("Cancelar");
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        javax.swing.GroupLayout vistaNuevoLayout = new javax.swing.GroupLayout(vistaNuevo.getContentPane());
+        vistaNuevo.getContentPane().setLayout(vistaNuevoLayout);
+        vistaNuevoLayout.setHorizontalGroup(
+            vistaNuevoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(vistaNuevoLayout.createSequentialGroup()
+                .addGroup(vistaNuevoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(vistaNuevoLayout.createSequentialGroup()
+                        .addGap(91, 91, 91)
+                        .addComponent(jButton1)
+                        .addGap(72, 72, 72)
+                        .addComponent(jButton2))
+                    .addGroup(vistaNuevoLayout.createSequentialGroup()
+                        .addGap(82, 82, 82)
+                        .addComponent(jLabel8))
+                    .addGroup(vistaNuevoLayout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addGroup(vistaNuevoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel12)
+                            .addComponent(jLabel19)
+                            .addComponent(jLabel11)
+                            .addComponent(jLabel10)
+                            .addComponent(jLabel9))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(vistaNuevoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(movilN)
+                            .addComponent(nomN)
+                            .addComponent(unidadN)
+                            .addComponent(telN)
+                            .addComponent(jComboBox1, 0, 186, Short.MAX_VALUE))))
+                .addContainerGap(58, Short.MAX_VALUE))
+        );
+        vistaNuevoLayout.setVerticalGroup(
+            vistaNuevoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(vistaNuevoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel8)
+                .addGap(29, 29, 29)
+                .addGroup(vistaNuevoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(movilN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(vistaNuevoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(telN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(vistaNuevoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(unidadN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(vistaNuevoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(nomN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(vistaNuevoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel19)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(51, 51, 51)
+                .addGroup(vistaNuevoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -784,35 +882,49 @@ public class datos extends javax.swing.JFrame implements ClipboardOwner{
     private javax.swing.JTextField bustec;
     private javax.swing.JMenuItem copiar;
     private javax.swing.JTextField idM;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton modifCancelar;
     private javax.swing.JButton modifGuardar;
     private javax.swing.JTextField movilM;
+    private javax.swing.JTextField movilN;
     private javax.swing.JTextField nomM;
+    private javax.swing.JTextField nomN;
     private javax.swing.JComboBox<String> select;
     private javax.swing.JTable table;
     private javax.swing.JTextField telM;
+    private javax.swing.JTextField telN;
     private javax.swing.JTextField txtBusqueda;
     private javax.swing.JPasswordField txtPasswd;
     private javax.swing.JTextField txtUsuario;
     private javax.swing.JTextField unidadM;
+    private javax.swing.JTextField unidadN;
     private javax.swing.JDialog vistaLogin;
     private javax.swing.JDialog vistaModif;
+    private javax.swing.JDialog vistaNuevo;
     // End of variables declaration//GEN-END:variables
 
     @Override
