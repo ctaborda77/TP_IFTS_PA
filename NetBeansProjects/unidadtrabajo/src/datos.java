@@ -486,7 +486,6 @@ public class datos extends javax.swing.JFrame implements ClipboardOwner{
     
     
 
-    
     private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
         try {
             filaSeleccionada = table.getSelectedRow();
