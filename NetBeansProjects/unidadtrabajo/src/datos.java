@@ -112,7 +112,7 @@ public class datos extends javax.swing.JFrame implements ClipboardOwner{
         txtUsuario = new javax.swing.JTextField();
         txtPasswd = new javax.swing.JPasswordField();
         jLabel5 = new javax.swing.JLabel();
-        btnLogin = new javax.swing.JButton();
+        btn_Login = new javax.swing.JButton();
         btnCancelarLogin = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -258,10 +258,10 @@ public class datos extends javax.swing.JFrame implements ClipboardOwner{
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/if_Login.png"))); // NOI18N
 
-        btnLogin.setText("Login");
-        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+        btn_Login.setText("Login");
+        btn_Login.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLoginActionPerformed(evt);
+                btn_LoginActionPerformed(evt);
             }
         });
 
@@ -285,7 +285,7 @@ public class datos extends javax.swing.JFrame implements ClipboardOwner{
                         .addGap(43, 43, 43)
                         .addGroup(vistaLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(vistaLoginLayout.createSequentialGroup()
-                                .addComponent(btnLogin)
+                                .addComponent(btn_Login)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnCancelarLogin))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, vistaLoginLayout.createSequentialGroup()
@@ -315,7 +315,7 @@ public class datos extends javax.swing.JFrame implements ClipboardOwner{
                     .addComponent(txtPasswd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(vistaLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnLogin)
+                    .addComponent(btn_Login)
                     .addComponent(btnCancelarLogin))
                 .addContainerGap(35, Short.MAX_VALUE))
         );
@@ -329,7 +329,6 @@ public class datos extends javax.swing.JFrame implements ClipboardOwner{
 
         jLabel1.setBackground(new java.awt.Color(51, 102, 255));
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("N° Teléfono");
 
         txtBusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -561,11 +560,12 @@ public class datos extends javax.swing.JFrame implements ClipboardOwner{
         try {
             Connection conec = null;
             filaSeleccionada = table.getSelectedRow();
-            
+
             conec = conectar();
             ps = conec.prepareStatement("DELETE FROM unidad_trabajo WHERE ID =? ");
             ps.setInt(1,Integer.parseInt(table.getValueAt(filaSeleccionada, 0).toString()));
             if (auth==true){
+
             int p = JOptionPane.showConfirmDialog(null,"¿Desea eliminar el registro?",
                 "Delete",JOptionPane.YES_NO_OPTION );
             if (p==0){
@@ -589,8 +589,89 @@ public class datos extends javax.swing.JFrame implements ClipboardOwner{
         
     }//GEN-LAST:event_btnEliminarActionPerformed
 
-    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {                                         
     datos(usuario, password);
+    if(usuario.equals(txtUsuario.getText()) && password.equals(txtPasswd.getText())){
+         auth=true;
+         System.out.println("btnM: "+btnM);
+         System.out.println("auth: "+auth);
+         if (btnM==true){
+             this.vistaModif.setVisible(true);
+         } else {
+            Connection conec = null;
+            filaSeleccionada = table.getSelectedRow();
+            int p = JOptionPane.showConfirmDialog(null,"¿Desea eliminar el registro?",
+                "Delete",JOptionPane.YES_NO_OPTION );
+            if (p==0){
+            try {
+                conec = conectar();
+                ps = conec.prepareStatement("DELETE FROM unidad_trabajo WHERE ID =? ");
+                ps.setInt(1,Integer.parseInt(table.getValueAt(filaSeleccionada, 0).toString()));
+            
+
+            int res = ps.executeUpdate();
+            if (res > 0){
+                JOptionPane.showMessageDialog(null, "Registro eliminado...");
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al eliminar registro");
+            }
+            conec.close();
+            mostrar();
+
+             } catch (Exception e) {
+                 System.out.println(e);
+             }
+            }
+
+            } 
+
+         this.vistaLogin.setVisible(false);
+        }else if(txtUsuario.getText().equals("") && txtPasswd.getText().equals("")){
+            JOptionPane.showMessageDialog(this,"Usuario y/o Contraseña estan vacios\nIngréselos por favor.");
+            this.vistaLogin.setVisible(true);
+            txtUsuario.setFocusable(true);
+        }else if(txtUsuario.getText().equals("")){
+            JOptionPane.showMessageDialog(this,"Usuario está vacio\nIngréselo por favor.");
+            this.vistaLogin.setVisible(true);
+            txtUsuario.setFocusable(true);
+        }else if(txtPasswd.getText().equals("")){
+            JOptionPane.showMessageDialog(this,"Contraseña está vacio\nIngréselo por favor.");
+            this.vistaLogin.setVisible(true);
+            txtPasswd.setFocusable(true);
+        }else if(txtUsuario.getText().compareTo(usuario)!=0 && txtPasswd.getText().compareTo(password)!=0){
+            JOptionPane.showMessageDialog(this,"Usuario y/o Contraseña no válidos\nIngrése nuevamente.");
+            this.vistaLogin.setVisible(true);
+            txtUsuario.setFocusable(true);
+        }else if(txtUsuario.getText().compareTo(usuario)!=0){
+            JOptionPane.showMessageDialog(this,"Usuario no válido\nIngrése nuevamente.");
+            this.vistaLogin.setVisible(true);
+            txtUsuario.setFocusable(true);
+        }else if(txtPasswd.getText().compareTo(password)!=0){
+            JOptionPane.showMessageDialog(this,"Contraseña no válida\nIngrése nuevamente.");
+            this.vistaLogin.setVisible(true);
+            txtPasswd.setFocusable(true);
+        }
+    }                                        
+
+    private void btnCancelarLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarLoginActionPerformed
+        this.vistaLogin.setVisible(false);
+    }//GEN-LAST:event_btnCancelarLoginActionPerformed
+
+    private void txtBusquedaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyTyped
+        txtBusqueda.addKeyListener(new KeyAdapter(){
+            public void keyReleased(final KeyEvent e){
+                String cadena = (txtBusqueda.getText()).toUpperCase();
+                txtBusqueda.setText(cadena);
+                repaint();
+                filtro();
+            }
+        });
+        trsfiltro = new TableRowSorter(this.table.getModel());
+        this.table.setRowSorter(trsfiltro);
+    }//GEN-LAST:event_txtBusquedaKeyTyped
+
+    private void btn_LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LoginActionPerformed
+            datos(usuario, password);
     if(usuario.equals(txtUsuario.getText()) && password.equals(txtPasswd.getText())){
          auth=true;
          System.out.println("btnM: "+btnM);
@@ -649,24 +730,9 @@ public class datos extends javax.swing.JFrame implements ClipboardOwner{
             this.vistaLogin.setVisible(true);
             txtPasswd.setFocusable(true);
         }
-    }//GEN-LAST:event_btnLoginActionPerformed
+    }//GEN-LAST:event_btn_LoginActionPerformed
+           
 
-    private void btnCancelarLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarLoginActionPerformed
-        this.vistaLogin.setVisible(false);
-    }//GEN-LAST:event_btnCancelarLoginActionPerformed
-
-    private void txtBusquedaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyTyped
-        txtBusqueda.addKeyListener(new KeyAdapter(){
-            public void keyReleased(final KeyEvent e){
-                String cadena = (txtBusqueda.getText()).toUpperCase();
-                txtBusqueda.setText(cadena);
-                repaint();
-                filtro();
-            }
-        });
-        trsfiltro = new TableRowSorter(this.table.getModel());
-        this.table.setRowSorter(trsfiltro);
-    }//GEN-LAST:event_txtBusquedaKeyTyped
 
 
     public static void main(String args[]) {
@@ -713,8 +779,8 @@ public class datos extends javax.swing.JFrame implements ClipboardOwner{
     private javax.swing.JTextField baseM;
     private javax.swing.JButton btnCancelarLogin;
     private javax.swing.JButton btnEliminar;
-    private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnModif;
+    private javax.swing.JButton btn_Login;
     private javax.swing.JTextField bustec;
     private javax.swing.JMenuItem copiar;
     private javax.swing.JTextField idM;
