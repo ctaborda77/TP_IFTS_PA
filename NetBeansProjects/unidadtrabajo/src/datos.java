@@ -10,7 +10,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
@@ -24,6 +29,7 @@ public class datos extends javax.swing.JFrame implements ClipboardOwner{
     public static final String PASSWD = "root";
     boolean auth = false;
     boolean btnM = false;
+    boolean btnN = false;
     private String usuario,password;
     
     PreparedStatement ps;
@@ -64,9 +70,7 @@ public class datos extends javax.swing.JFrame implements ClipboardOwner{
         
         try {
             Statement stmt = this.conectar().createStatement();
-            ResultSet consulta = stmt.executeQuery("SELECT ID,Movil,Telefono,"
-                    + "UnidadOperativa,Nombre_Apellido,BaseAdministrativa "
-                    + "FROM unidad_trabajo");
+            ResultSet consulta = stmt.executeQuery("SELECT ID,Movil,Telefono,UnidadOperativa,Nombre_Apellido,NOMBRE_BASE FROM unidad_trabajo U INNER JOIN bases B ON U.BaseAdministrativa=B.ID_BASE");
             modelo.setColumnIdentifiers(new Object[]{"Id","Móvil","Teléfono",
                 "Unidad Operativa","Nombre y Apellido","Base Administrativa"});
             while(consulta.next()){
@@ -75,7 +79,7 @@ public class datos extends javax.swing.JFrame implements ClipboardOwner{
                 consulta.getString("Telefono"),
                 consulta.getString("UnidadOperativa"),
                 consulta.getString("Nombre_Apellido"),
-                consulta.getString("BaseAdministrativa")});
+                consulta.getString("NOMBRE_BASE")});
             }
             table.setModel(modelo);
         } catch (Exception e) {
@@ -127,7 +131,7 @@ public class datos extends javax.swing.JFrame implements ClipboardOwner{
         nomN = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        comboBase = new javax.swing.JComboBox<>();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtBusqueda = new javax.swing.JTextField();
@@ -139,6 +143,7 @@ public class datos extends javax.swing.JFrame implements ClipboardOwner{
         jLabel6 = new javax.swing.JLabel();
         btnModif = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
+        btnNuevo = new javax.swing.JButton();
 
         copiar.setText("copiar");
         copiar.addActionListener(new java.awt.event.ActionListener() {
@@ -334,6 +339,8 @@ public class datos extends javax.swing.JFrame implements ClipboardOwner{
                 .addContainerGap(35, Short.MAX_VALUE))
         );
 
+        vistaNuevo.setLocation(new java.awt.Point(450, 200));
+        vistaNuevo.setMinimumSize(new java.awt.Dimension(485, 400));
         vistaNuevo.setPreferredSize(new java.awt.Dimension(434, 365));
 
         jLabel8.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
@@ -352,8 +359,6 @@ public class datos extends javax.swing.JFrame implements ClipboardOwner{
         jButton1.setText("Registrar");
 
         jButton2.setText("Cancelar");
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout vistaNuevoLayout = new javax.swing.GroupLayout(vistaNuevo.getContentPane());
         vistaNuevo.getContentPane().setLayout(vistaNuevoLayout);
@@ -383,7 +388,7 @@ public class datos extends javax.swing.JFrame implements ClipboardOwner{
                             .addComponent(nomN)
                             .addComponent(unidadN)
                             .addComponent(telN)
-                            .addComponent(jComboBox1, 0, 186, Short.MAX_VALUE))))
+                            .addComponent(comboBase, 0, 186, Short.MAX_VALUE))))
                 .addContainerGap(58, Short.MAX_VALUE))
         );
         vistaNuevoLayout.setVerticalGroup(
@@ -410,7 +415,7 @@ public class datos extends javax.swing.JFrame implements ClipboardOwner{
                 .addGap(18, 18, 18)
                 .addGroup(vistaNuevoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel19)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboBase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(51, 51, 51)
                 .addGroup(vistaNuevoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
@@ -483,6 +488,13 @@ public class datos extends javax.swing.JFrame implements ClipboardOwner{
             }
         });
 
+        btnNuevo.setText("Nuevo");
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -516,7 +528,8 @@ public class datos extends javax.swing.JFrame implements ClipboardOwner{
                                 .addGap(32, 32, 32)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnModif, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(btnModif, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnNuevo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
@@ -535,7 +548,8 @@ public class datos extends javax.swing.JFrame implements ClipboardOwner{
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(bustec, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(bustec, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnNuevo))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnEliminar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -630,7 +644,7 @@ public class datos extends javax.swing.JFrame implements ClipboardOwner{
         
         try {
             conec = conectar();
-            ps = conec.prepareStatement("UPDATE unidad_trabajo SET Movil=?,Telefono=?,UnidadOperativa=?,Nombre_Apellido=?,BaseAdministrativa=? WHERE ID =? ");
+            ps = conec.prepareStatement("UPDATE unidad_trabajo AS u INNER JOIN bases AS b ON u.BaseAdministrativa=b.ID_BASE SET Movil=?,Telefono=?,UnidadOperativa=?,Nombre_Apellido=?,NOMBRE_BASE=? WHERE ID =? ");
             ps.setString(1,movilM.getText().toUpperCase());
             ps.setString(2,telM.getText());
             ps.setString(3,unidadM.getText().toUpperCase());
@@ -686,70 +700,7 @@ public class datos extends javax.swing.JFrame implements ClipboardOwner{
         
         
     }//GEN-LAST:event_btnEliminarActionPerformed
-
-    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {                                         
-    datos(usuario, password);
-    if(usuario.equals(txtUsuario.getText()) && password.equals(txtPasswd.getText())){
-         auth=true;
-         System.out.println("btnM: "+btnM);
-         System.out.println("auth: "+auth);
-         if (btnM==true){
-             this.vistaModif.setVisible(true);
-         } else {
-            Connection conec = null;
-            filaSeleccionada = table.getSelectedRow();
-            int p = JOptionPane.showConfirmDialog(null,"¿Desea eliminar el registro?",
-                "Delete",JOptionPane.YES_NO_OPTION );
-            if (p==0){
-            try {
-                conec = conectar();
-                ps = conec.prepareStatement("DELETE FROM unidad_trabajo WHERE ID =? ");
-                ps.setInt(1,Integer.parseInt(table.getValueAt(filaSeleccionada, 0).toString()));
-            
-
-            int res = ps.executeUpdate();
-            if (res > 0){
-                JOptionPane.showMessageDialog(null, "Registro eliminado...");
-            } else {
-                JOptionPane.showMessageDialog(null, "Error al eliminar registro");
-            }
-            conec.close();
-            mostrar();
-
-             } catch (Exception e) {
-                 System.out.println(e);
-             }
-            }
-
-            } 
-
-         this.vistaLogin.setVisible(false);
-        }else if(txtUsuario.getText().equals("") && txtPasswd.getText().equals("")){
-            JOptionPane.showMessageDialog(this,"Usuario y/o Contraseña estan vacios\nIngréselos por favor.");
-            this.vistaLogin.setVisible(true);
-            txtUsuario.setFocusable(true);
-        }else if(txtUsuario.getText().equals("")){
-            JOptionPane.showMessageDialog(this,"Usuario está vacio\nIngréselo por favor.");
-            this.vistaLogin.setVisible(true);
-            txtUsuario.setFocusable(true);
-        }else if(txtPasswd.getText().equals("")){
-            JOptionPane.showMessageDialog(this,"Contraseña está vacio\nIngréselo por favor.");
-            this.vistaLogin.setVisible(true);
-            txtPasswd.setFocusable(true);
-        }else if(txtUsuario.getText().compareTo(usuario)!=0 && txtPasswd.getText().compareTo(password)!=0){
-            JOptionPane.showMessageDialog(this,"Usuario y/o Contraseña no válidos\nIngrése nuevamente.");
-            this.vistaLogin.setVisible(true);
-            txtUsuario.setFocusable(true);
-        }else if(txtUsuario.getText().compareTo(usuario)!=0){
-            JOptionPane.showMessageDialog(this,"Usuario no válido\nIngrése nuevamente.");
-            this.vistaLogin.setVisible(true);
-            txtUsuario.setFocusable(true);
-        }else if(txtPasswd.getText().compareTo(password)!=0){
-            JOptionPane.showMessageDialog(this,"Contraseña no válida\nIngrése nuevamente.");
-            this.vistaLogin.setVisible(true);
-            txtPasswd.setFocusable(true);
-        }
-    }                                        
+                                   
 
     private void btnCancelarLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarLoginActionPerformed
         this.vistaLogin.setVisible(false);
@@ -776,6 +727,9 @@ public class datos extends javax.swing.JFrame implements ClipboardOwner{
          System.out.println("auth: "+auth);
          if (btnM==true){
              this.vistaModif.setVisible(true);
+         } else 
+             if (btnN==true){
+             this.vistaNuevo.setVisible(true);
          } else {
             Connection conec = null;
             filaSeleccionada = table.getSelectedRow();
@@ -829,6 +783,43 @@ public class datos extends javax.swing.JFrame implements ClipboardOwner{
             txtPasswd.setFocusable(true);
         }
     }//GEN-LAST:event_btn_LoginActionPerformed
+
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        btnN = true;    
+        Connection conec = null;
+        conec = conectar();
+        comboBase.removeAllItems();
+        System.out.println(auth);
+        if (auth==true){
+            try {
+                ps = conec.prepareStatement("SELECT * FROM bases WHERE 1");
+                rs = ps.executeQuery();
+                comboBase.addItem("Seleccione una opción");
+                while(rs.next()){
+                    comboBase.addItem(rs.getString("NOMBRE_BASE"));
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,e);
+            }
+                this.vistaNuevo.setVisible(true);
+                
+                                
+                if(conec!=null){
+                    try {
+                        conec.close();
+                        rs.close();
+                        conec=null;
+                        rs=null;
+                        
+                    } catch (SQLException e) {
+                        JOptionPane.showMessageDialog(null,e);
+                    }
+                }
+            }else{
+                this.vistaLogin.setVisible(true);
+            }
+            System.out.println(auth);
+    }//GEN-LAST:event_btnNuevoActionPerformed
            
 
 
@@ -878,13 +869,14 @@ public class datos extends javax.swing.JFrame implements ClipboardOwner{
     private javax.swing.JButton btnCancelarLogin;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnModif;
+    private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btn_Login;
     private javax.swing.JTextField bustec;
+    private javax.swing.JComboBox<String> comboBase;
     private javax.swing.JMenuItem copiar;
     private javax.swing.JTextField idM;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
