@@ -1,4 +1,5 @@
 
+
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.ClipboardOwner;
@@ -835,16 +836,30 @@ public class datos extends javax.swing.JFrame implements ClipboardOwner{
 
     private void bntNewRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntNewRegistroActionPerformed
         Connection conec = null;
-        
+        ResultSet rs=null;
+        conec = conectar();
+        String idbase="";
         try {
-            conec = conectar();
+            String msg = comboBase.getSelectedItem().toString();
+            System.out.println("SELECT ID_BASE FROM bases WHERE NOMBRE_BASE='"+msg+"'");
+            
+            Statement stmt = this.conectar().createStatement();
+            rs = stmt.executeQuery("SELECT ID_BASE,NOMBRE_BASE FROM bases WHERE NOMBRE_BASE='"+msg+"'");
+            if (rs!=null){
+                while(rs.next()){
+                    idbase=rs.getString(1); 
+                }
+            }
+            int idbaseInt = Integer.parseInt(idbase);
+            System.out.println(idbaseInt);
+
             ps = conec.prepareStatement("INSERT INTO unidad_trabajo (Movil,Telefono,UnidadOperativa,Nombre_Apellido,BaseAdministrativa) VALUES (?,?,?,?,?)");
             ps.setString(1,movilN.getText().toUpperCase());
             ps.setString(2,telN.getText().toUpperCase());
             ps.setString(3,unidadN.getText().toUpperCase());
             ps.setString(4,nomN.getText().toUpperCase());
-            ps.setInt(5,comboBase.getSelectedIndex());
-            
+            ps.setInt(5,idbaseInt);
+                 
             int res = ps.executeUpdate();
             System.out.println(comboBase.getSelectedIndex());
             if (res > 0 && comboBase.getSelectedIndex()!=0){
