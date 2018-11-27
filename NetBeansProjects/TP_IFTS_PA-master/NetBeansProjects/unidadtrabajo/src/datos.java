@@ -53,6 +53,36 @@ public class datos extends javax.swing.JFrame implements ClipboardOwner{
         mostrar();
     }
 
+    private void NuevaBaseActionPerformed(java.awt.event.ActionEvent evt) {                                          
+        this.vistaNuevaBase.setVisible(true);
+    }                                         
+
+    private void btnCancelarNuevaBaseActionPerformed(java.awt.event.ActionEvent evt) {                                                     
+        this.vistaNuevaBase.setVisible(false);
+    }                                                    
+
+    private void btnNuevaBaseActionPerformed(java.awt.event.ActionEvent evt) {                                             
+        Connection conec = null;
+        
+        try {
+            conec = conectar();
+            ps = conec.prepareStatement("INSERT INTO bases(NOMBRE_BASE) VALUES (?)");
+            ps.setString(1,txtNuevaBase.getText().toUpperCase());
+            int res = ps.executeUpdate();
+            if (res > 0){
+                JOptionPane.showMessageDialog(null, "Nueva base técnica creada...");
+            conec.close();
+            this.vistaNuevaBase.setVisible(false);
+            }else {
+                JOptionPane.showMessageDialog(null, "Debe ingresar una base técnica");
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(datos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    
     private void mostrar(){
         DefaultTableModel modelo = new DefaultTableModel();
         
